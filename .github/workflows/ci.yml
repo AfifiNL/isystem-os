@@ -21,7 +21,7 @@ jobs:
     steps:
       # actions/checkout v4.4.0, verified from the official tag on 2026-08-09:
       # https://github.com/actions/checkout/releases/tag/v4.4.0
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - name: Require the complete public database test candidate
         shell: bash
         run: |
@@ -132,7 +132,7 @@ jobs:
     steps:
       # actions/checkout v4.4.0, verified from the official tag on 2026-08-09:
       # https://github.com/actions/checkout/releases/tag/v4.4.0
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - name: Require the combined public source candidate
         shell: bash
         run: |
