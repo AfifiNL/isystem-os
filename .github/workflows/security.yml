@@ -70,9 +70,17 @@ jobs:
       - name: Scan source with all three detectors
         shell: bash
         run: |
+          trufflehog_exclude="$RUNNER_TEMP/trufflehog-exclude-paths"
+          printf '%s\n' '(^|/)(\.git|node_modules|\.next|artifacts)(/|$)' > "$trufflehog_exclude"
           bash scripts/scan-public-secrets.sh "$GITHUB_WORKSPACE"
           gitleaks dir --no-banner --redact --exit-code 1 "$GITHUB_WORKSPACE"
-          trufflehog filesystem --no-update --no-verification --fail --fail-on-scan-errors "$GITHUB_WORKSPACE"
+          trufflehog filesystem \
+            --no-update \
+            --no-verification \
+            --fail \
+            --fail-on-scan-errors \
+            --exclude-paths="$trufflehog_exclude" \
+            "$GITHUB_WORKSPACE"
       - name: Install locked dependencies
         run: npm ci
       - name: Audit locked production dependencies

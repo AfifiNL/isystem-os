@@ -6,6 +6,13 @@ cd "$repo_root"
 # shellcheck source=public-tool-versions.sh
 source scripts/public-tool-versions.sh
 
+trufflehog_exclude="$(mktemp)"
+printf '%s\n' '(^|/)(\.git|node_modules|\.next|artifacts)(/|$)' > "$trufflehog_exclude"
+cleanup_trufflehog_exclude() {
+  rm -f -- "$trufflehog_exclude"
+}
+trap cleanup_trufflehog_exclude EXIT INT TERM
+
 bash scripts/validate-public-packaging.sh
 
 if [[ ! -f package.json || ! -f package-lock.json || ! -f PUBLIC_SNAPSHOT_MANIFEST.sha256 ]]; then
@@ -78,14 +85,20 @@ echo "Scanning the final source tree with pinned independent scanners..."
 bash scripts/scan-public-secrets.test.sh --require-independent
 bash scripts/scan-public-secrets.sh "$repo_root"
 gitleaks dir --no-banner --redact --exit-code 1 "$repo_root"
-trufflehog filesystem --no-update --no-verification --fail --fail-on-scan-errors "$repo_root"
+trufflehog filesystem \
+  --no-update \
+  --no-verification \
+  --fail \
+  --fail-on-scan-errors \
+  --exclude-paths="$trufflehog_exclude" \
+  "$repo_root"
 
 echo "Installing locked dependencies..."
 npm ci
 
 inventory_one="$(mktemp)"
 inventory_two="$(mktemp)"
-trap 'rm -f -- "$inventory_one" "$inventory_two"' EXIT
+trap 'rm -f -- "$trufflehog_exclude" "$inventory_one" "$inventory_two"' EXIT
 echo "Verifying deterministic third-party dependency inventory..."
 npm run --silent license:inventory > "$inventory_one"
 npm run --silent license:inventory > "$inventory_two"
