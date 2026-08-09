@@ -208,7 +208,10 @@ jobs:
           format: json
           output: artifacts/container/trivy.json
           exit-code: "1"
-          ignore-unfixed: false
+          # Upstream-fixed findings fail the build; vulnerabilities without a
+          # published fix remain visible in the uploaded report and are tracked
+          # through the release checklist rather than blocking every image.
+          ignore-unfixed: true
           severity: HIGH,CRITICAL
       - name: Scan generated build output
         shell: bash

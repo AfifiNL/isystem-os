@@ -172,6 +172,7 @@ bash scripts/verify-public-container.sh \
 echo "Scanning the final runtime image..."
 trivy image \
   --exit-code 1 \
+  --ignore-unfixed \
   --format json \
   --output artifacts/container-local-gate/trivy.json \
   --scanners vuln \

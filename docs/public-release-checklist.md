@@ -53,7 +53,7 @@ This checklist is mandatory for the first public source release and should be re
 - [ ] Known limitations and breaking-change risk are prominent.
 - [ ] Documentation links and commands work.
 - [ ] Release notes identify the exact commit and migration compatibility.
-- [ ] The digest-pinned Docker image builds with synthetic configuration, runs non-root/read-only with dropped capabilities, passes its health check, and has no Trivy high/critical finding.
+- [ ] The digest-pinned Docker image builds with synthetic configuration, runs non-root/read-only with dropped capabilities, passes its health check, and has no Trivy high/critical finding with an upstream fix. Unfixed findings remain in the uploaded report and require explicit security review before release.
 - [ ] The container exposes at least 1 GiB of bounded `/tmp` scratch space and its in-container FFmpeg/FFprobe media smoke passes.
 
 ## Required automated contract

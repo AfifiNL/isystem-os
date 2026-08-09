@@ -27,9 +27,13 @@ ENV PORT=3000
 ENV FFMPEG_PATH=/usr/bin/ffmpeg
 ENV FFPROBE_PATH=/usr/bin/ffprobe
 
+# npm is needed in the build stage only; keeping its package manager tree in
+# the runtime image expands the attack surface without serving the app.
 RUN apt-get update \
+    && apt-get upgrade --yes --no-install-recommends \
     && apt-get install --yes --no-install-recommends ca-certificates ffmpeg \
     && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx \
     && groupadd --gid 1001 isystem \
     && useradd --uid 1001 --gid isystem --create-home --shell /usr/sbin/nologin isystem
 
