@@ -23,7 +23,10 @@ if (!Array.isArray(findings)) {
 
 const root = resolve(scanRoot);
 const hexKey = /^[a-f0-9]{64}$/u;
-const base64Key = /^[A-Za-z0-9+/]{43}=$/u;
+// Next may serialize its 32-byte server-action key as either padded standard
+// base64 or unpadded URL-safe base64, depending on the runtime/build toolchain.
+// This is safe to allow only for the exact framework-owned manifest field below.
+const nextActionKey = /^(?:[a-f0-9]{64}|[A-Za-z0-9+/_-]{43}=?)$/u;
 const manifestAllowlist = [
   {
     path: /(?:^|\/)prerender-manifest\.json$/u,
@@ -37,12 +40,12 @@ const manifestAllowlist = [
       "__NEXT_PREVIEW_MODE_SIGNING_KEY",
       "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY",
     ]),
-    secret: /^(?:[a-f0-9]{64}|[A-Za-z0-9+/]{43}=)$/u,
+    secret: nextActionKey,
   },
   {
     path: /(?:^|\/)server\/server-reference-manifest\.json$/u,
     fields: new Set(["encryptionKey"]),
-    secret: base64Key,
+    secret: nextActionKey,
   },
 ];
 

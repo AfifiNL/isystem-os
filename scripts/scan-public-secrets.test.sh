@@ -10,6 +10,8 @@ trap 'rm -rf -- "$fixture_root"' EXIT INT TERM
 mkdir -p \
   "$fixture_root/custom-safe" \
   "$fixture_root/generated-safe/.next/server/app/api/health" \
+  "$fixture_root/generated-safe/.next/server" \
+  "$fixture_root/generated-safe/.next/standalone/.next/server" \
   "$fixture_root/generated-safe/.next/standalone/node_modules/example" \
   "$fixture_root/generated-unsafe/.next/server/app/api/health" \
   "$fixture_root/independent-safe" \
@@ -28,6 +30,16 @@ printf '%s\n' 'export const health = { status: "ok" };' \
   > "$fixture_root/generated-safe/.next/server/app/api/health/route.js"
 printf '%s\n' 'third-party fixture excluded from generated application scan' \
   > "$fixture_root/generated-safe/.next/standalone/node_modules/example/fixture.js"
+
+# Next can emit a hex or unpadded URL-safe server-action key. Keep this fixture
+# generated at runtime so the scanner source never contains credential-shaped
+# material while the generated-output allowlist is covered by regression tests.
+hex_key="$(node -e 'process.stdout.write(require("node:crypto").randomBytes(32).toString("hex"))')"
+url_safe_key="$(node -e 'process.stdout.write(require("node:crypto").randomBytes(32).toString("base64url"))')"
+printf '{"encryptionKey":"%s"}\n' "$hex_key" \
+  > "$fixture_root/generated-safe/.next/server/server-reference-manifest.json"
+printf '{"encryptionKey":"%s"}\n' "$url_safe_key" \
+  > "$fixture_root/generated-safe/.next/standalone/.next/server/server-reference-manifest.json"
 
 generic_key_name="$(printf '\141\160\151\137\153\145\171')"
 printf 'export const %s = "%s%s";\n' \
