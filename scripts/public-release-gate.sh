@@ -169,12 +169,21 @@ docker build \
 bash scripts/verify-public-container.sh \
   isystem-os:release-gate artifacts/container-local-gate
 
-echo "Scanning the final runtime image..."
+echo "Recording the complete final runtime vulnerability report..."
+trivy image \
+  --exit-code 0 \
+  --format json \
+  --output artifacts/container-local-gate/trivy-full.json \
+  --scanners vuln \
+  --severity HIGH,CRITICAL \
+  isystem-os:release-gate
+
+echo "Blocking fixable high-severity runtime vulnerabilities..."
 trivy image \
   --exit-code 1 \
   --ignore-unfixed \
   --format json \
-  --output artifacts/container-local-gate/trivy.json \
+  --output artifacts/container-local-gate/trivy-fixable.json \
   --scanners vuln \
   --severity HIGH,CRITICAL \
   isystem-os:release-gate

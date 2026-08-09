@@ -199,18 +199,28 @@ jobs:
         run: bash scripts/verify-public-container.sh isystem-os:ci artifacts/container
       # aquasecurity/trivy-action v0.36.0 commit, verified in the official repository on 2026-08-09:
       # https://github.com/aquasecurity/trivy-action/commit/ed142fd0673e97e23eac54620cfb913e5ce36c25
-      - name: Scan the final runtime image for high-severity vulnerabilities
+      - name: Record the complete runtime vulnerability report
         uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25
         with:
           image-ref: isystem-os:ci
           version: v0.70.0
           scanners: vuln
           format: json
-          output: artifacts/container/trivy.json
+          output: artifacts/container/trivy-full.json
+          exit-code: "0"
+          ignore-unfixed: false
+          severity: HIGH,CRITICAL
+      - name: Block fixable high-severity runtime vulnerabilities
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25
+        with:
+          image-ref: isystem-os:ci
+          version: v0.70.0
+          scanners: vuln
+          format: json
+          output: artifacts/container/trivy-fixable.json
           exit-code: "1"
-          # Upstream-fixed findings fail the build; vulnerabilities without a
-          # published fix remain visible in the uploaded report and are tracked
-          # through the release checklist rather than blocking every image.
+          # The complete report above preserves unfixed findings. This gate
+          # blocks only findings for which an upstream fix is available.
           ignore-unfixed: true
           severity: HIGH,CRITICAL
       - name: Scan generated build output
