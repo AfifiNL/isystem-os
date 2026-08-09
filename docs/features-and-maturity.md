@@ -1,15 +1,27 @@
 # Features and maturity
 
-This matrix prevents positioning from outrunning evidence. It must be updated from the sanitized public source and verified user journeys before every release.
+This matrix prevents positioning from outrunning evidence. It is the product truth for the public v0.1.0 snapshot and must be updated from verified user journeys before every release.
 
 ## Status labels
 
-- **Candidate:** observed in the private source audit; public extraction and clean-room verification remain.
+- **Candidate:** included in the public source, but the complete end-to-end journey or operator evidence is not yet a public release claim.
 - **Experimental:** available or documented for evaluation, but incomplete or likely to change.
 - **Planned:** direction only; do not present as implemented.
 - **Verified beta:** reserved for a capability exercised successfully from a fresh public clone.
 
-No capability is labeled Verified beta yet.
+The source, bootstrap, migration, security, and container contracts are verified for v0.1.0. Product capabilities retain the more conservative labels below until their complete public journeys are exercised.
+
+## Verified release foundations
+
+| Foundation | Evidence |
+|---|---|
+| Fresh public source bootstrap | `./setup.sh` from a clean GitHub clone installs the lockfile, validates `isystem.config.ts`, creates a mode-600 `.env.local`, and leaves provider/database setup explicit. |
+| Configuration and safety contracts | `npm run test:bootstrap`, `npm run test:client-config`, `npm run test:branding`, and `npm run docs:public-check` pass on the release commit. |
+| Application build and runtime packaging | Public CI [run 31306431973](https://github.com/AfifiNL/isystem-os/actions/runs/31306431973) passes typecheck, lint, build, standalone preparation, Compose validation, read-only health smoke, and the runtime image gate. |
+| Database replay and tenant contracts | The same CI run replays every migration from zero, runs all exported pgTAP suites, and runs the two-session booking-capacity probe. |
+| Dependency and source security | Public CI [security run 31306431961](https://github.com/AfifiNL/isystem-os/actions/runs/31306431961) passes the packaging validator, Gitleaks, TruffleHog, source secret scan, and production dependency audit. |
+
+These foundations make the repository usable for evaluation, development, and a controlled beta deployment. They do not replace an operator's review of identity, authorization, backups, providers, legal obligations, or production data handling.
 
 | Area | Intended outcome | Current public status | Verification needed |
 |---|---|---|---|

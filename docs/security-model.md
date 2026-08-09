@@ -19,14 +19,14 @@ Plan for unauthenticated abuse, compromised low-privilege accounts, cross-worksp
 
 | Boundary | Intended control | Public evidence status |
 |---|---|---|
-| Identity | Supabase authentication and server-side session refresh | Extraction verification required |
-| Tenant data | Workspace scoping plus database row-level security | Negative tests required |
+| Identity | Supabase authentication and server-side session refresh | Implemented; deployment redirects, invitations, and role policy still require operator verification |
+| Tenant data | Workspace scoping plus database row-level security | Migration replay and representative negative contracts run in public CI; exercise your own enabled modules before production |
 | Privileged operations | Server-only credentials and role/capability checks | Route-by-route review required |
 | Public endpoints | Input validation, rate limits, bounded work | Abuse testing required |
 | Webhooks | Signature, timestamp, replay, and idempotency checks | Provider journey required |
 | User content | Output encoding and constrained rich-content handling | Rendering review required |
 | AI | Explicit gating, metering, data minimization, untrusted output | Provider and prompt review required |
-| Dependencies | Lockfile, Dependabot, audit workflow | Third-party inventory incomplete |
+| Dependencies | Lockfile, Dependabot, source audit, and production audit workflow | v0.1.0 inventory and public CI scans are checked in; review package terms before redistribution |
 | Operations | TLS, secret store, backups, monitoring, rollback | Deployment-specific |
 
 ## Non-negotiable rules

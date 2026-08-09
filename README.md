@@ -9,7 +9,7 @@
 
 **iSystem OS is an Apache-2.0-licensed, self-hostable business operating system for service teams.** It is designed to connect the path from website, content, and SEO to enquiries, bookings, customer workflows, portals, agreements, invoices, and delivery evidence.
 
-> **Public beta:** the private-to-public extraction is still being validated. Expect incomplete features and breaking changes. Review [feature maturity](docs/features-and-maturity.md) and the [security model](docs/security-model.md) before using real customer data.
+> **Public beta release (v0.1.0):** this is an installable, source-available snapshot verified from a fresh clone with the documented build, migration, security, and container contracts. Product workflows remain beta and may change. Review [feature maturity](docs/features-and-maturity.md) and the [security model](docs/security-model.md) before using real customer data.
 
 ## Why iSystem OS
 
@@ -24,7 +24,7 @@ Service businesses often stitch together a website, CRM, scheduler, client porta
 
 ## Start here
 
-The bootstrap helper is **verification-required until the first public source snapshot lands**. It installs locked dependencies, validates `isystem.config.ts`, and prepares `.env.local`; it does not provision Supabase, apply migrations, or configure external providers.
+The bootstrap helper is the supported first-run path. It installs locked dependencies, validates `isystem.config.ts`, and prepares `.env.local`; it does not provision Supabase, apply migrations, or configure external providers.
 
 ```bash
 git clone https://github.com/AfifiNL/isystem-os.git
@@ -34,7 +34,7 @@ cd isystem-os
 
 Then follow [Getting started](docs/getting-started.md). For deployment, the initial target is a self-hosted application connected to managed Supabase. A fully self-hosted Supabase path is documented as experimental.
 
-The combined source candidate must wire `docs:public-check` to `node scripts/check-public-docs.mjs`. The release gate also requires strict type-checking, reusable-branding, bootstrap, public quality, configuration, AI-contract, navigation, release-critical application, and secret-scan contracts documented in [AGENTS.md](AGENTS.md). It verifies the exported SHA-256 source manifest and exported-script relative import closure, and never treats a packaging-only tree as a passing application.
+The release verification commands include strict type-checking, reusable-branding, bootstrap, public quality, configuration, AI-contract, navigation, release-critical application, and secret-scan contracts documented in [AGENTS.md](AGENTS.md). They verify the exported SHA-256 source manifest and exported-script relative import closure, and never treat a packaging-only tree as a passing application.
 
 The focused bootstrap and media portability checks are available independently:
 
@@ -63,7 +63,7 @@ bash scripts/public-release-gate.sh
 
 ## Project status and expectations
 
-iSystem OS is maintained as a public beta. There is no promise of compatibility, uptime, regulatory compliance, or fitness for a particular purpose. Pin versions, test upgrades, keep backups, and perform your own security review.
+iSystem OS v0.1.0 is maintained as a public beta. The source snapshot and automated release contracts are verified, but there is no promise of compatibility, uptime, regulatory compliance, or fitness for a particular purpose. Pin versions, test upgrades, keep backups, and perform your own security review.
 
 ## Using with Codex
 
