@@ -150,7 +150,7 @@ jobs:
         shell: bash
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends ripgrep
+          sudo apt-get install -y --no-install-recommends ffmpeg ripgrep
       - name: Validate public packaging and snapshot manifest
         run: bash scripts/validate-public-packaging.sh
       - name: Install locked dependencies
