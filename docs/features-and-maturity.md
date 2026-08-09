@@ -17,9 +17,9 @@ The source, bootstrap, migration, security, and container contracts are verified
 |---|---|
 | Fresh public source bootstrap | `./setup.sh` from a clean GitHub clone installs the lockfile, validates `isystem.config.ts`, creates a mode-600 `.env.local`, and leaves provider/database setup explicit. |
 | Configuration and safety contracts | `npm run test:bootstrap`, `npm run test:client-config`, `npm run test:branding`, and `npm run docs:public-check` pass on the release commit. |
-| Application build and runtime packaging | Public CI [run 31306431973](https://github.com/AfifiNL/isystem-os/actions/runs/31306431973) passes typecheck, lint, build, standalone preparation, Compose validation, read-only health smoke, and the runtime image gate. |
+| Application build and runtime packaging | Public CI [run 31309838285](https://github.com/AfifiNL/isystem-os/actions/runs/31309838285) passes typecheck, lint, build, standalone preparation, Compose validation, read-only health smoke, and the runtime image gate. |
 | Database replay and tenant contracts | The same CI run replays every migration from zero, runs all exported pgTAP suites, and runs the two-session booking-capacity probe. |
-| Dependency and source security | Public CI [security run 31306431961](https://github.com/AfifiNL/isystem-os/actions/runs/31306431961) passes the packaging validator, Gitleaks, TruffleHog, source secret scan, and production dependency audit. |
+| Dependency and source security | Public CI [security run 31309838286](https://github.com/AfifiNL/isystem-os/actions/runs/31309838286) passes the packaging validator, Gitleaks, TruffleHog, source secret scan, and production dependency audit. |
 
 These foundations make the repository usable for evaluation, development, and a controlled beta deployment. They do not replace an operator's review of identity, authorization, backups, providers, legal obligations, or production data handling.
 
