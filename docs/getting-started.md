@@ -1,6 +1,6 @@
 # Getting started
 
-> **Verification status:** verified from a fresh public GitHub clone for v0.1.0. The source bootstrap is runnable; Supabase provisioning and provider setup remain deliberate operator steps.
+> **Verification status:** verified from a fresh public GitHub clone for v0.1.1. The source bootstrap is runnable; Supabase provisioning and provider setup remain deliberate operator steps.
 
 ## 1. Understand the deployment boundary
 

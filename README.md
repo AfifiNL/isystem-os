@@ -9,7 +9,7 @@
 
 **iSystem OS is an Apache-2.0-licensed, self-hostable business operating system for service teams.** It is designed to connect the path from website, content, and SEO to enquiries, bookings, customer workflows, portals, agreements, invoices, and delivery evidence.
 
-> **Public beta release (v0.1.0):** this is an installable, source-available snapshot verified from a fresh clone with the documented build, migration, security, and container contracts. Product workflows remain beta and may change. Review [feature maturity](docs/features-and-maturity.md) and the [security model](docs/security-model.md) before using real customer data.
+> **Public beta release (v0.1.1):** this is an installable, source-available snapshot verified from a fresh clone with the documented build, migration, security, and container contracts. Product workflows remain beta and may change. Review [feature maturity](docs/features-and-maturity.md) and the [security model](docs/security-model.md) before using real customer data.
 
 ## Why iSystem OS
 
@@ -63,7 +63,7 @@ bash scripts/public-release-gate.sh
 
 ## Project status and expectations
 
-iSystem OS v0.1.0 is maintained as a public beta. The source snapshot and automated release contracts are verified, but there is no promise of compatibility, uptime, regulatory compliance, or fitness for a particular purpose. Pin versions, test upgrades, keep backups, and perform your own security review.
+iSystem OS v0.1.1 is maintained as a public beta. The source snapshot and automated release contracts are verified, but there is no promise of compatibility, uptime, regulatory compliance, or fitness for a particular purpose. Pin versions, test upgrades, keep backups, and perform your own security review.
 
 ## Using with Codex
 

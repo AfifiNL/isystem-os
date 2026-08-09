@@ -26,7 +26,7 @@ Plan for unauthenticated abuse, compromised low-privilege accounts, cross-worksp
 | Webhooks | Signature, timestamp, replay, and idempotency checks | Provider journey required |
 | User content | Output encoding and constrained rich-content handling | Rendering review required |
 | AI | Explicit gating, metering, data minimization, untrusted output | Provider and prompt review required |
-| Dependencies | Lockfile, Dependabot, source audit, and production audit workflow | v0.1.0 inventory and public CI scans are checked in; review package terms before redistribution |
+| Dependencies | Lockfile, Dependabot, source audit, and production audit workflow | v0.1.1 inventory and public CI scans are checked in; review package terms before redistribution |
 | Operations | TLS, secret store, backups, monitoring, rollback | Deployment-specific |
 
 ## Non-negotiable rules

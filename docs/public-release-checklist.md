@@ -2,9 +2,9 @@
 
 This checklist is mandatory for the first public source release and should be repeated for later releases in proportion to change risk.
 
-## v0.1.0 evidence record
+## v0.1.1 release-candidate evidence record
 
-The initial public release was completed on 2026-08-09 from a fresh GitHub clone. The automated portions of this checklist are retained in [Public CI run 31306431973](https://github.com/AfifiNL/isystem-os/actions/runs/31306431973) and [Security run 31306431961](https://github.com/AfifiNL/isystem-os/actions/runs/31306431961). Those runs cover the exported source manifest, relative-import closure, documentation, bootstrap/configuration contracts, strict typecheck, lint, build, migration replay, every exported pgTAP suite, booking-capacity concurrency, source secret scans, dependency audit, container health, and runtime image checks.
+The v0.1.1 release candidate is being validated from a fresh GitHub clone. The prior public CI evidence is retained in [Public CI run 31306431973](https://github.com/AfifiNL/isystem-os/actions/runs/31306431973) and [Security run 31306431961](https://github.com/AfifiNL/isystem-os/actions/runs/31306431961); the current pull request must pass the same protected checks before the v0.1.1 tag is created. Those runs cover the exported source manifest, relative-import closure, documentation, bootstrap/configuration contracts, strict typecheck, lint, build, migration replay, every exported pgTAP suite, booking-capacity concurrency, source secret scans, dependency audit, container health, and runtime image checks.
 
 The remaining unchecked items below are deployment-owner responsibilities (license/legal review, backup restoration, upgrade and rollback rehearsal, provider-specific journeys, browser evidence, and any unresolved security finding) and are intentionally not represented as universal guarantees by the repository.
 
@@ -58,7 +58,7 @@ The remaining unchecked items below are deployment-owner responsibilities (licen
 - [x] README does not claim a demo, one-command deployment, container image, test suite, or integration that was not exercised.
 - [x] Known limitations and breaking-change risk are prominent.
 - [x] Documentation links and commands work.
-- [x] Release notes identify the exact commit and migration compatibility.
+- [ ] Release notes identify the exact v0.1.1 tag commit and migration compatibility before tagging.
 - [x] The digest-pinned Docker image builds with synthetic configuration, runs non-root/read-only with dropped capabilities, passes its health check, and has no Trivy high/critical finding with an upstream fix. The complete `trivy-full.json` report is retained; any unfixed high/critical findings require explicit security review before release.
 - [x] The container exposes at least 1 GiB of bounded `/tmp` scratch space and its in-container FFmpeg/FFprobe media smoke passes.
 
@@ -73,7 +73,7 @@ Browser E2E and accessibility checks remain a documented manual release step unt
 
 All GitHub Actions are pinned to immutable commits. Gitleaks and TruffleHog CI downloads are pinned by version and official archive SHA-256; Trivy and Supabase CLI versions are explicit. The pins were resolved from official repositories and registries on 2026-08-09; future upgrades must repeat that verification and update adjacent evidence comments.
 
-Generate a deterministic dependency license inventory after `npm ci` with `npm run license:inventory`. Review that artifact alongside fonts, icons, media, templates, copied code, and upstream notice requirements. The v0.1.0 snapshot has verified notices in `THIRD_PARTY_NOTICES.md`; future changes must keep that inventory synchronized and must not reintroduce the release-blocker marker.
+Generate a deterministic dependency license inventory after `npm ci` with `npm run license:inventory`. Review that artifact alongside fonts, icons, media, templates, copied code, and upstream notice requirements. The v0.1.1 release candidate has verified notices in `THIRD_PARTY_NOTICES.md`; future changes must keep that inventory synchronized and must not reintroduce the release-blocker marker.
 
 The local gate coordinates checks but does not replace human review:
 

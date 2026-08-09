@@ -4,7 +4,7 @@ set -euo pipefail
 # iSystem OS dependency and local-configuration bootstrap.
 # This does not provision providers, migrate a database, or start the app.
 
-echo "=== iSystem OS bootstrap (public beta v0.1.0) ==="
+echo "=== iSystem OS bootstrap (public beta v0.1.1) ==="
 
 if [[ ! -f package.json || ! -f package-lock.json ]]; then
   echo "Error: the public application source and npm lockfile are not present."

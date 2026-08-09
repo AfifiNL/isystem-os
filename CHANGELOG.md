@@ -19,7 +19,7 @@ All notable public changes will be documented here. The format follows Keep a Ch
 - Product capabilities remain beta and are tracked in [the feature maturity matrix](docs/features-and-maturity.md).
 - Browser E2E/accessibility, backup restore, and provider-specific journeys remain operator release steps rather than a universal hosted-service guarantee.
 
-## [0.1.0] - 2026-08-09
+## [0.1.1] - 2026-08-09
 
 ### Added
 
@@ -31,5 +31,10 @@ All notable public changes will be documented here. The format follows Keep a Ch
 - Zero npm audit findings in the locked dependency graph at release time.
 - Independent Gitleaks, TruffleHog, and generated-output scans for the source and production build.
 
+## [0.1.0] - 2026-08-09
+
+- Initial public beta tag; see the immutable `v0.1.0` release for its exact source snapshot.
+
 [Unreleased]: https://github.com/AfifiNL/isystem-os/commits/main
+[0.1.1]: https://github.com/AfifiNL/isystem-os/releases/tag/v0.1.1
 [0.1.0]: https://github.com/AfifiNL/isystem-os/releases/tag/v0.1.0

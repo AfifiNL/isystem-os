@@ -1,6 +1,6 @@
 # Features and maturity
 
-This matrix prevents positioning from outrunning evidence. It is the product truth for the public v0.1.0 snapshot and must be updated from verified user journeys before every release.
+This matrix prevents positioning from outrunning evidence. It is the product truth for the public v0.1.1 snapshot and must be updated from verified user journeys before every release.
 
 ## Status labels
 
@@ -9,7 +9,7 @@ This matrix prevents positioning from outrunning evidence. It is the product tru
 - **Planned:** direction only; do not present as implemented.
 - **Verified beta:** reserved for a capability exercised successfully from a fresh public clone.
 
-The source, bootstrap, migration, security, and container contracts are verified for v0.1.0. Product capabilities retain the more conservative labels below until their complete public journeys are exercised.
+The source, bootstrap, migration, security, and container contracts are verified for v0.1.1. Product capabilities retain the more conservative labels below until their complete public journeys are exercised.
 
 ## Verified release foundations
 

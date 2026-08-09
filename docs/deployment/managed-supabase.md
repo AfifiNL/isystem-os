@@ -1,6 +1,6 @@
 # Self-hosted application with managed Supabase
 
-> **Supported beta target:** the public v0.1.0 source, build, migration replay, and container contracts are verified in CI. Deployment remains environment-specific and still requires an operator-owned staging and backup drill.
+> **Supported beta target:** the public v0.1.1 source, build, migration replay, and container contracts are verified in CI. Deployment remains environment-specific and still requires an operator-owned staging and backup drill.
 
 ## Topology
 
