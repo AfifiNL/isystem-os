@@ -211,6 +211,7 @@ export function TemplateNavbar() {
                                 className={`hidden sm:inline-flex border ${isIsystemAgency ? "border-[var(--public-action)] shadow-none" : "border-[var(--template-border-accent-soft)] text-white shadow-[var(--template-depth-glow)]"}`}
                                 style={{
                                     background: isIsystemAgency ? "var(--public-action)" : "linear-gradient(to right, var(--template-gradient-from), var(--template-gradient-to))",
+                                    color: isIsystemAgency ? "var(--primary-foreground)" : "#fff",
                                 }}
                             >
                                 <Link href={toLocalizedHref(desktopCta.href)} data-analytics-cta="true" data-analytics-name="navbar-primary-cta" data-analytics-placement="navbar">

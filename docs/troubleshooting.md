@@ -4,7 +4,7 @@ Start by recording the public commit, operating system, Node and npm versions, d
 
 ## Bootstrap says source is missing
 
-The packaging overlay is not the application distribution. `setup.sh` requires `package.json` and `package-lock.json` from the sanitized source snapshot. Obtain a complete public release; do not copy files from a private deployment ad hoc.
+`setup.sh` requires the complete public application source plus `package.json` and `package-lock.json`. Obtain a tagged public release; do not copy files from a private deployment ad hoc.
 
 ## `npm ci` rejects the lockfile
 

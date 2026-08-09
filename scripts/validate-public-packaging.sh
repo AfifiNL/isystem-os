@@ -173,8 +173,8 @@ if ! grep -q "public beta" README.md; then
   failure=1
 fi
 
-if ! grep -q "verification-required" README.md; then
-  echo "README.md must retain the bootstrap verification gate"
+if ! grep -Eq "verification-required|supported first-run path" README.md; then
+  echo "README.md must document the supported bootstrap path or an explicit verification gate"
   failure=1
 fi
 

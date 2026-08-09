@@ -10,5 +10,7 @@ identity are marks of their respective owner. The Apache License, Version 2.0,
 does not grant permission to use those marks except for reasonable and
 customary attribution. See TRADEMARKS.md.
 
-Third-party attribution for the first public source snapshot is not yet
-complete. See THIRD_PARTY_NOTICES.md before redistribution.
+Third-party attribution for the first public source snapshot is recorded in
+THIRD_PARTY_NOTICES.md, docs/third-party-inventory.json, and the asset
+provenance inventory. Downstream distributors must retain the applicable
+notices and review package and asset terms before redistribution.

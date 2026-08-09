@@ -1,6 +1,6 @@
 # Getting started
 
-> **Verification status:** this flow is a release candidate until a maintainer completes it from a fresh public clone. The packaging overlay alone is not runnable.
+> **Verification status:** verified from a fresh public GitHub clone for v0.1.1. The source bootstrap is runnable; Supabase provisioning and provider setup remain deliberate operator steps.
 
 ## 1. Understand the deployment boundary
 
@@ -8,7 +8,7 @@ The first supported target is the iSystem OS application hosted by you and conne
 
 ## 2. Check prerequisites
 
-After the sanitized source snapshot is present, confirm its runtime declarations and install:
+From the public release checkout, confirm the runtime declarations and install:
 
 ```bash
 node --version
@@ -16,7 +16,7 @@ npm --version
 ./setup.sh
 ```
 
-`setup.sh` requires `package.json` and `package-lock.json`, uses `npm ci`, validates the checked-in `isystem.config.ts`, and creates `.env.local` from `.env.example` only when it is missing. It does not create infrastructure, apply migrations, seed data, or start the app.
+`setup.sh` requires the complete public source, uses `npm ci`, validates the checked-in `isystem.config.ts`, and creates `.env.local` from `.env.example` only when it is missing. It does not create infrastructure, apply migrations, seed data, or start the app. A clean run was verified on 2026-08-09 with Node 22.16.0 and npm 11.6.2.
 
 Edit `isystem.config.ts` to set the workspace name, brand tokens, template, locales, module profile, public identity, and initial owner. Keep secrets in `.env.local`, never in the TypeScript config.
 
@@ -52,7 +52,7 @@ Run the read-only diagnostic before provisioning anything:
 npm run doctor
 ```
 
-The starter profile must pass. Staged email and full AI/payment profiles are informational until you deliberately enable those providers.
+The checked-in example values are intentionally placeholders, so a fresh clone reports starter blockers until you replace the four required values with credentials from your own Supabase project. Staged email and full AI/payment profiles are informational until you deliberately enable those providers.
 
 ## 5. Apply database changes
 
@@ -75,7 +75,7 @@ The expected development command is:
 npm run dev
 ```
 
-Open `http://localhost:3000`. If the command or port differs in the public snapshot, the release is blocked until this guide and `AGENTS.md` are corrected.
+Open `http://localhost:3000`. If the command or port differs from the release, update this guide and `AGENTS.md` together.
 
 ## 7. Verify a minimal journey
 

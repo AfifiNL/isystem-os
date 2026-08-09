@@ -4,10 +4,10 @@ iSystem OS separates application hosting from the Supabase data platform. Choose
 
 | Model | Status | You operate | External dependency |
 |---|---|---|---|
-| Self-hosted app + managed Supabase | Initial beta target; verification required | App runtime, secrets, domains, monitoring | Supabase project |
+| Self-hosted app + managed Supabase | Supported beta target; source/build/migration contracts verified | App runtime, secrets, domains, monitoring | Supabase project |
 | Fully self-hosted app + Supabase | Experimental/planned | App, database, auth, storage, networking, backups, upgrades | Optional providers only |
 
-Neither path is a one-command production deployment. Both require TLS, secret management, migration review, backups, monitoring, and a rollback plan. The repository includes a hardened application-only Docker Compose profile; it deliberately does not embed Supabase or provider credentials.
+Neither path is a one-command production deployment. Both require TLS, secret management, migration review, backups, monitoring, and a rollback plan. The repository includes a hardened application-only Docker Compose profile; it deliberately does not embed Supabase or provider credentials. The v0.1.1 public CI run verifies the application build, migration replay, health check, and runtime container posture; your environment still needs its own staging and restore drill.
 
 ## Baseline release artifact
 

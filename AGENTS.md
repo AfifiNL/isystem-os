@@ -1,10 +1,10 @@
 # iSystem OS
 
-**Status:** Public beta extraction | **Expected port:** 3000 | **Expected stack:** Next.js, TypeScript, React, Supabase
+**Status:** Public beta release v0.1.1 candidate | **Expected port:** 3000 | **Expected stack:** Next.js, TypeScript, React, Supabase
 
 ## What
 
-iSystem OS is a self-hostable business OS for service teams. This packaging tree may temporarily exist without the application source; never infer that a documented capability is implemented until the source and verification gates confirm it.
+iSystem OS is a self-hostable business OS for service teams. The public release includes the application source and verification gates; never infer that a product capability is production-ready until its maturity label and operator evidence confirm it.
 
 ## Safety boundary
 

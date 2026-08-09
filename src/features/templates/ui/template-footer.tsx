@@ -154,7 +154,10 @@ export function TemplateFooter() {
                             data-analytics-name="footer-cta"
                             data-analytics-placement="footer"
                             className={`group inline-flex items-center gap-2 ${isIsystemAgency ? "justify-center rounded-[var(--public-radius-md)] border-[var(--public-action)] shadow-none" : "rounded-[var(--template-radius-pill)] border-[var(--template-border-accent-soft)] hover:shadow-[var(--template-depth-glow)]"} px-6 py-3 text-sm font-bold text-white transition-all hover:-translate-y-0.5`}
-                            style={{ background: isIsystemAgency ? "var(--public-action)" : "linear-gradient(135deg, var(--template-primary), var(--template-gradient-to, var(--template-primary)))" }}
+                            style={{
+                                background: isIsystemAgency ? "var(--public-action)" : "linear-gradient(135deg, var(--template-primary), var(--template-gradient-to, var(--template-primary)))",
+                                color: "#fff",
+                            }}
                         >
                             {getLocalizedSiteChromeText(locale, siteChrome.footer.cta.label)}
                             <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />

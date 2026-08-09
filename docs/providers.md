@@ -4,7 +4,7 @@ Provider integrations are optional boundaries. Keep them disabled until configur
 
 | Capability | Expected provider path | Status |
 |---|---|---|
-| Database, authentication, storage | Supabase | Core dependency; public deployment verification required |
+| Database, authentication, storage | Supabase | Core dependency; public migration and tenant contracts are verified, while each deployment still needs project-specific review |
 | Primary AI generation | Vertex AI | Candidate; explicit enablement and metering review required |
 | AI fallback | Gemini API or OpenAI | Optional candidate; behavior must fail closed |
 | Transactional/newsletter email | Resend | Optional candidate; sender and webhook validation required |

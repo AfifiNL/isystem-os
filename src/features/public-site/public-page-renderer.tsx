@@ -112,6 +112,7 @@ function ButtonLink({ href: link, children, secondary = false }: { href: string;
             className={`isystem-public-button group inline-flex min-h-11 items-center justify-center gap-2 rounded-[var(--public-radius-md)] px-5 py-3 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--public-action)] ${secondary
                 ? "border border-[var(--public-line)] bg-[var(--public-paper)] text-[var(--public-ink)] hover:border-[var(--public-action)] hover:text-[var(--public-action-strong)]"
                 : "bg-[var(--public-action)] text-white hover:bg-[var(--public-action-strong)]"}`}
+            style={{ color: secondary ? "var(--public-ink)" : "#fff" }}
         >
             <span>{children}</span>
             <span className="isystem-public-button-arrow rtl-flip" aria-hidden="true">&#8594;</span>

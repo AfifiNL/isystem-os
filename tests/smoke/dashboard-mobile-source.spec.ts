@@ -93,7 +93,7 @@ test.describe("dashboard mobile responsive source contracts", () => {
         expect(contentPage).toContain("min-w-0");
         expect(contentPage).toContain("AppCommandBar");
         expect(contentFeed).toContain("mx-auto flex w-full max-w-7xl min-w-0 flex-col");
-        expect(cmsWorkspace).toContain("flex w-full max-w-full min-w-0 flex-col");
+        expect(cmsWorkspace).toContain("flex w-full h-full min-w-0 flex-col");
         expect(cmsWorkspace).toContain("overflow-x-auto");
         expect(cmsWorkspace).toContain("lg:flex-row");
         expect(blogEditor).toContain("flex min-w-0 flex-col gap-6");
@@ -103,7 +103,7 @@ test.describe("dashboard mobile responsive source contracts", () => {
     test("AI draft generator controls stay stacked and reachable on narrow phones", () => {
         const draftForm = source("src/features/content-engine/ui/draft-generator-form.tsx");
 
-        expect(draftForm).toContain("mx-auto grid w-full max-w-7xl min-w-0");
+        expect(draftForm).toContain("mx-auto grid w-full max-w-6xl min-w-0");
         expect(draftForm).toContain("flex min-w-0 flex-col gap-2 sm:flex-row");
         expect(draftForm).toContain("w-full");
         expect(draftForm).toContain("min-h-12 h-auto w-full");
@@ -140,7 +140,7 @@ test.describe("dashboard mobile responsive source contracts", () => {
         expect(dashboardState).toContain('"source-intelligence": {');
         expect(dashboardState).toContain('href: "/dashboard/source-intelligence"');
         expect(dashboardState).toContain('icon: "database-zap"');
-        expect(dashboardState).toContain('c.key === "source-intelligence"');
+        expect(dashboardLauncher).toContain('moduleKeys: ["inbox", "opportunities", "market-monitor", "source-intelligence", "analytics", "legibility-hub"]');
         expect(windowMeta).toContain('"source-intelligence": {');
         expect(windowMeta).toContain('title: "Source Intelligence"');
         expect(appIcon).toContain('"source-intelligence"');

@@ -1,6 +1,6 @@
 # Self-hosted application with managed Supabase
 
-> **Beta target, verification required:** this is the intended first deployment path. A maintainer must complete it from a fresh public clone before the repository calls it supported.
+> **Supported beta target:** the public v0.1.1 source, build, migration replay, and container contracts are verified in CI. Deployment remains environment-specific and still requires an operator-owned staging and backup drill.
 
 ## Topology
 
@@ -35,7 +35,12 @@ npm run lint
 npm run build
 ```
 
-Run any additional verified checks exposed by `npm run`. There is no generic test command claimed yet.
+Run the complete local contract when preparing a release:
+
+```bash
+npm run verify
+npm audit --omit=dev
+```
 
 ## Configure the runtime
 

@@ -2,13 +2,12 @@
 
 This roadmap communicates direction, not a promise of dates or delivery. Items move only when implementation and verification evidence exist.
 
-## Now: trustworthy public beta
+## Now: trustworthy public beta maintenance
 
-- Complete the sanitized source extraction without private history, secrets, customer data, or internal references.
-- Verify bootstrap, lint, build, migration, and a minimal end-to-end workflow from a fresh clone.
-- Complete the third-party license and asset audit.
-- Publish an evidence-based feature maturity matrix and known limitations.
-- Validate the self-hosted application with managed Supabase deployment path.
+- Keep the v0.1.0 source snapshot reproducible and its release evidence current.
+- Turn candidate product areas into Verified beta journeys one at a time, starting with the website-to-enquiry path.
+- Rehearse backup restore, provider failure, and operator rollback against synthetic environments for every deployment profile.
+- Keep dependency, secret, license, asset, and runtime-image scans green.
 
 ## Next: reusable service operations
 

@@ -4,11 +4,11 @@ set -euo pipefail
 # iSystem OS dependency and local-configuration bootstrap.
 # This does not provision providers, migrate a database, or start the app.
 
-echo "=== iSystem OS bootstrap (public beta) ==="
+echo "=== iSystem OS bootstrap (public beta v0.1.1) ==="
 
 if [[ ! -f package.json || ! -f package-lock.json ]]; then
-  echo "Error: the verified application source and npm lockfile are not present."
-  echo "This packaging overlay is not a runnable distribution by itself."
+  echo "Error: the public application source and npm lockfile are not present."
+  echo "Clone a complete iSystem OS release instead of copying a packaging overlay."
   exit 1
 fi
 
