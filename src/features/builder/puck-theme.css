@@ -1,0 +1,101 @@
+/*
+ * Puck → admin design system bridge.
+ *
+ * Puck ships with a fixed grey/azure palette. Without this file the editor
+ * frame, canvas, and chrome look like a third-party tool dropped into the
+ * iSystem dashboard. We map Puck's design tokens onto our admin tokens so
+ * the builder inherits whatever theme the dashboard is in (light or dark via
+ * the global `.dark` class). Scoped to `.puck-themed` so we don't pollute
+ * unrelated surfaces.
+ */
+.puck-themed {
+    --puck-color-grey-12: var(--background);
+    --puck-color-grey-11: var(--background);
+    --puck-color-grey-10: var(--card);
+    --puck-color-grey-09: color-mix(in oklab, var(--border) 80%, transparent);
+    --puck-color-grey-08: var(--border);
+    --puck-color-grey-07: color-mix(in oklab, var(--muted-foreground) 60%, transparent);
+    --puck-color-grey-06: var(--muted-foreground);
+    --puck-color-grey-05: var(--muted-foreground);
+    --puck-color-grey-04: var(--foreground);
+    --puck-color-grey-03: var(--foreground);
+    --puck-color-grey-02: var(--foreground);
+    --puck-color-grey-01: var(--foreground);
+
+    --puck-color-azure-04: var(--primary);
+    --puck-color-azure-05: var(--primary);
+    --puck-color-azure-06: color-mix(in oklab, var(--primary) 70%, white);
+    --puck-color-azure-07: color-mix(in oklab, var(--primary) 50%, white);
+    --puck-color-azure-08: color-mix(in oklab, var(--primary) 30%, var(--background));
+    --puck-color-azure-09: color-mix(in oklab, var(--primary) 18%, var(--background));
+    --puck-color-azure-10: color-mix(in oklab, var(--primary) 10%, var(--background));
+    --puck-color-azure-11: color-mix(in oklab, var(--primary) 6%, var(--background));
+    --puck-color-azure-12: color-mix(in oklab, var(--primary) 4%, var(--background));
+
+    --puck-color-white: var(--card);
+    --puck-color-black: var(--foreground);
+    --puck-font-family: inherit;
+
+    color: var(--foreground);
+    background: var(--background);
+}
+
+/*
+ * The canvas root is the actual page-preview surface. Puck hardcodes
+ * `background: white` and a grey outline regardless of theme; in dark mode
+ * that creates a glaring white slab. Replace it with our card token plus
+ * a soft border that matches the rest of the dashboard.
+ */
+.puck-themed [class*="_PuckCanvas-root"] {
+    background: var(--card);
+    outline: 1px solid color-mix(in oklab, var(--border) 90%, transparent);
+    border-radius: 12px;
+    box-shadow:
+        0 1px 0 color-mix(in oklab, white 40%, transparent),
+        0 18px 42px color-mix(in oklab, black 8%, transparent);
+}
+
+.dark .puck-themed [class*="_PuckCanvas-root"] {
+    box-shadow:
+        inset 0 1px 0 color-mix(in oklab, white 6%, transparent),
+        0 24px 48px color-mix(in oklab, black 45%, transparent);
+}
+
+/*
+ * Layout wrapper background — the gutter around the canvas. Without this
+ * override it stays Puck's grey-12 which doesn't recolor cleanly under the
+ * dark-mode token because the rule was authored before our remapping.
+ */
+.puck-themed [class*="_PuckLayout-inner"] {
+    background-color: var(--background);
+}
+
+/*
+ * Sidebars (fields panel, components panel). Use the card token so they
+ * read as part of the same surface family as the rest of the dashboard.
+ */
+.puck-themed [class*="_SidebarSection"],
+.puck-themed [class*="_PuckFields"] {
+    background: var(--card);
+    color: var(--foreground);
+    border-color: color-mix(in oklab, var(--border) 90%, transparent);
+}
+
+/*
+ * Header / top chrome — match the dashboard's elevated surface.
+ */
+.puck-themed [class*="_PuckHeader"] {
+    background: var(--card);
+    border-bottom: 1px solid color-mix(in oklab, var(--border) 90%, transparent);
+}
+
+/*
+ * Form controls inside Puck (text inputs, selects, textareas). These pick
+ * up our tokens via the variable remap above, but a couple need explicit
+ * border-radius alignment with shadcn defaults.
+ */
+.puck-themed input:not([type="checkbox"]):not([type="radio"]),
+.puck-themed select,
+.puck-themed textarea {
+    border-radius: calc(var(--radius) - 4px);
+}

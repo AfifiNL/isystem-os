@@ -1,0 +1,25 @@
+# Force Nixpacks to treat this repository as a Node/Next.js app.
+# (Legacy Supabase Edge Functions under `supabase/functions` were removed).
+providers = ["node"]
+
+[variables]
+# Nixpacks only accepts the Node major through NIXPACKS_NODE_VERSION. The exact
+# patch comes from the pinned nixpkgs archive below.
+NIXPACKS_NODE_VERSION = "22"
+# Give `next build` enough heap in the Hetzner/Nixpacks Docker builder while
+# preserving the memory-saving settings in `next.config.ts`.
+NODE_OPTIONS = "--max-old-space-size=4096"
+FONTCONFIG_FILE = "/app/public/fonts/fonts.conf"
+
+[phases.setup]
+# Use default Nixpacks channel to avoid OOM when unpacking custom nixpkgs archives
+nixPkgs = ["nodejs_22", "fontconfig"]
+
+[phases.install]
+cmds = ["npm ci"]
+
+[phases.build]
+cmds = ["npm run build"]
+
+[start]
+cmd = "npm run start"

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 96" role="img" aria-labelledby="title desc">
+  <title id="title">Facility Services starter logo</title>
+  <desc id="desc">A generic FS monogram followed by Facility Services.</desc>
+  <rect width="420" height="96" rx="20" fill="#0b1624"/>
+  <path d="M30 24h44v12H43v12h27v12H43v20H30V24Zm50 0h18c18 0 29 10 29 27 0 18-12 29-30 29H80V24Zm14 13v30h4c9 0 15-5 15-16 0-9-5-14-15-14h-4Z" fill="#19c6e5"/>
+  <text x="148" y="58" fill="#fff" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">Facility Services</text>
+</svg>

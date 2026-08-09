@@ -1,0 +1,39 @@
+services:
+  app:
+    build:
+      context: .
+      target: runtime
+      args:
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+        NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL:?set NEXT_PUBLIC_SUPABASE_URL}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY:?set NEXT_PUBLIC_SUPABASE_ANON_KEY}
+    env_file:
+      - path: .env.local
+        required: false
+    environment:
+      FFMPEG_PATH: /usr/bin/ffmpeg
+      FFPROBE_PATH: /usr/bin/ffprobe
+      HOSTNAME: 0.0.0.0
+      NODE_ENV: production
+      PORT: 3000
+      TRUSTED_CLIENT_IP_HEADER: ${TRUSTED_CLIENT_IP_HEADER:-x-trusted-client-ip}
+    ports:
+      - "127.0.0.1:${ISYSTEM_PORT:-3000}:3000"
+    restart: unless-stopped
+    cpus: ${ISYSTEM_CPU_LIMIT:-2.0}
+    mem_limit: ${ISYSTEM_MEMORY_LIMIT:-2g}
+    pids_limit: ${ISYSTEM_PIDS_LIMIT:-512}
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=${ISYSTEM_SCRATCH_SIZE:-1g},mode=1777
+      - /app/.next/cache:rw,noexec,nosuid,size=256m,uid=1001,gid=1001,mode=0750
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 3

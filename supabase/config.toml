@@ -1,0 +1,33 @@
+# Local-only configuration for reproducible migration replay.
+# Keep this project ID neutral and distinct from every hosted Supabase project.
+project_id = "isystem-os-public-ci"
+
+[api]
+enabled = false
+port = 54321
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 17
+health_timeout = "5m"
+
+[db.migrations]
+enabled = true
+schema_paths = []
+
+[db.seed]
+enabled = false
+sql_paths = []
+
+[studio]
+enabled = false
+
+[local_smtp]
+enabled = false
+
+[edge_runtime]
+enabled = false
+
+[analytics]
+enabled = false

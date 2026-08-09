@@ -1,0 +1,77 @@
+name: Security checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "37 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dependency-review:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      # actions/checkout v4.4.0, verified from the official tag on 2026-08-09:
+      # https://github.com/actions/checkout/releases/tag/v4.4.0
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      # actions/dependency-review-action v4.9.0, verified from the official tag on 2026-08-09:
+      # https://github.com/actions/dependency-review-action/releases/tag/v4.9.0
+      - uses: actions/dependency-review-action@2031cfc080254a8a887f58cffee85186f0e49e48
+        with:
+          fail-on-severity: high
+
+  source-audit:
+    runs-on: ubuntu-latest
+    steps:
+      # actions/checkout v4.4.0, verified from the official tag on 2026-08-09:
+      # https://github.com/actions/checkout/releases/tag/v4.4.0
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Require the combined public source candidate
+        shell: bash
+        run: |
+          if [[ ! -f package.json || ! -f package-lock.json || ! -f PUBLIC_SNAPSHOT_MANIFEST.sha256 ]]; then
+            echo "::error::Security checks require the combined source candidate and manifest."
+            exit 1
+          fi
+      # actions/setup-node v4.4.0, verified from the official tag on 2026-08-09:
+      # https://github.com/actions/setup-node/releases/tag/v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: "22.13.1"
+          cache: npm
+      - name: Validate public packaging
+        run: bash scripts/validate-public-packaging.sh
+      - name: Install checksum-pinned independent secret scanners
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/public-security-bin"
+          bash scripts/install-secret-scanners.sh "$RUNNER_TEMP/public-security-bin"
+          printf '%s\n' "$RUNNER_TEMP/public-security-bin" >> "$GITHUB_PATH"
+      - name: Verify scanner versions and regression fixtures
+        shell: bash
+        run: |
+          source scripts/public-tool-versions.sh
+          [[ "$(gitleaks version)" == "$PUBLIC_GITLEAKS_VERSION" ]]
+          [[ "$(trufflehog --version)" == "trufflehog $PUBLIC_TRUFFLEHOG_VERSION" ]]
+          bash scripts/scan-public-secrets.test.sh --require-independent
+      - name: Scan source with all three detectors
+        shell: bash
+        run: |
+          bash scripts/scan-public-secrets.sh "$GITHUB_WORKSPACE"
+          gitleaks dir --no-banner --redact --exit-code 1 "$GITHUB_WORKSPACE"
+          trufflehog filesystem --no-update --no-verification --fail --fail-on-scan-errors "$GITHUB_WORKSPACE"
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Audit locked production dependencies
+        run: npm audit --omit=dev
+
+# These checks supplement, but do not replace, the public release gate and human
+# review of authorization, tenant isolation, migrations, and data handling.
