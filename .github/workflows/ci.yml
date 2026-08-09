@@ -146,6 +146,11 @@ jobs:
         with:
           node-version: "22.13.1"
           cache: npm
+      - name: Install packaging validator prerequisites
+        shell: bash
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ripgrep
       - name: Validate public packaging and snapshot manifest
         run: bash scripts/validate-public-packaging.sh
       - name: Install locked dependencies
