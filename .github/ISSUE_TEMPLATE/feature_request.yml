@@ -1,0 +1,50 @@
+name: Feature request
+description: Propose a reusable improvement to iSystem OS
+title: "[Feature]: "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Preflight
+      options:
+        - label: I searched existing issues, discussions, and the roadmap.
+          required: true
+        - label: This proposal contains no confidential customer or business information.
+          required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Describe the service-team problem without prescribing implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired outcome
+      description: What would become easier, safer, or more reliable?
+    validations:
+      required: true
+  - type: textarea
+    id: users
+    attributes:
+      label: Users and workflow
+      description: Which role and stage of the attract-to-deliver flow does this affect?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Include configuration or extension approaches that avoid core complexity.
+  - type: checkboxes
+    id: risks
+    attributes:
+      label: Risk areas
+      options:
+        - label: Tenant isolation or permissions
+        - label: Database migration or data retention
+        - label: Personal, financial, contractual, or regulated data
+        - label: External provider, webhook, or AI behavior
+        - label: No special risk identified

@@ -1,0 +1,3 @@
+-- This is a placeholder for a remote-only migration to satisfy the Supabase CLI alignment.
+-- Version: 20260520170431
+-- Name: complete_legibility_hub_sla_fixups

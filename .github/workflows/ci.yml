@@ -1,0 +1,233 @@
+name: Public CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  database-release-contracts:
+    name: Fresh migration, pgTAP, and capacity concurrency
+    runs-on: ubuntu-latest
+    steps:
+      # actions/checkout v4.4.0, verified from the official tag on 2026-08-09:
+      # https://github.com/actions/checkout/releases/tag/v4.4.0
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Require the complete public database test candidate
+        shell: bash
+        run: |
+          mkdir -p artifacts
+          if ! mkdir -m 700 artifacts/supabase; then
+            echo "::error::Database evidence directory must be new for this run."
+            exit 1
+          fi
+          printf 'Fresh local database contracts for %s\n' "$GITHUB_SHA" > artifacts/supabase/run.txt
+          required_paths=(
+            supabase/config.toml
+            supabase/tests/00_release_schema_contracts.sql
+            supabase/tests/10_release_runtime_invariants.sql
+            supabase/tests/20_contact_submission_atomic.sql
+            supabase/tests/30_privileged_identity_and_content_security.sql
+            supabase/tests/README.md
+            supabase/tests/booking_capacity_concurrency.sh
+          )
+          for required_path in "${required_paths[@]}"; do
+            if [[ ! -s "$required_path" ]]; then
+              echo "::error::Missing public database release file: $required_path"
+              exit 1
+            fi
+          done
+          if [[ ! -x supabase/tests/booking_capacity_concurrency.sh ]]; then
+            echo "::error::The capacity concurrency probe must be executable."
+            exit 1
+          fi
+          if ! find supabase/migrations -maxdepth 1 -type f -name '*.sql' -print -quit | grep -q .; then
+            echo "::error::No Supabase SQL migrations were found."
+            exit 1
+          fi
+      # supabase/setup-cli v3.0.0 commit, verified in the official repository on 2026-08-09:
+      # https://github.com/supabase/setup-cli/commit/46f7f98c7f948ad727d22c1e67fab04c223a0520
+      - uses: supabase/setup-cli@46f7f98c7f948ad727d22c1e67fab04c223a0520
+        with:
+          version: 2.113.0
+      - name: Verify pinned database prerequisites
+        shell: bash
+        run: |
+          installed_version="$(supabase --version)"
+          printf 'Supabase CLI %s\n' "$installed_version" | tee -a artifacts/supabase/run.txt
+          if [[ "$installed_version" != "2.113.0" ]]; then
+            echo "::error::Expected Supabase CLI 2.113.0, got $installed_version."
+            exit 1
+          fi
+          if ! command -v psql >/dev/null 2>&1; then
+            echo "::error::psql is required for the two-session capacity test."
+            exit 1
+          fi
+      - name: Start the disposable local Supabase stack
+        shell: bash
+        run: |
+          supabase start >/dev/null 2>&1
+          printf '%s\n' 'Disposable local Supabase stack started.' > artifacts/supabase/start.log
+      - name: Replay every migration from zero
+        shell: bash
+        run: |
+          set -o pipefail
+          supabase db reset --no-seed 2>&1 | tee artifacts/supabase/reset.log
+      - name: Run release pgTAP contracts
+        shell: bash
+        run: |
+          set -o pipefail
+          supabase test db supabase/tests 2>&1 | tee artifacts/supabase/pgtap.log
+      - name: Run two-session booking capacity contract
+        shell: bash
+        env:
+          SUPABASE_DB_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+        run: |
+          set -o pipefail
+          bash supabase/tests/booking_capacity_concurrency.sh 2>&1 | tee artifacts/supabase/concurrency.log
+      - name: Capture local database diagnostics
+        if: always()
+        shell: bash
+        run: |
+          docker ps -a \
+            --filter 'name=supabase_' \
+            --format 'table {{.Names}}\t{{.Image}}\t{{.Status}}' \
+            > artifacts/supabase/docker-containers.txt 2>&1 || true
+          docker logs supabase_db_isystem-os-public-ci \
+            > artifacts/supabase/postgres.log 2>&1 || true
+      - name: Remove the disposable local database
+        if: always()
+        shell: bash
+        run: |
+          if command -v supabase >/dev/null 2>&1; then
+            set -o pipefail
+            supabase stop --no-backup --project-id isystem-os-public-ci \
+              2>&1 | tee artifacts/supabase/cleanup.log
+          else
+            printf 'Supabase CLI was unavailable; no local stack was started.\n' \
+              > artifacts/supabase/cleanup.log
+          fi
+      # actions/upload-artifact v7.0.1, verified from the official tag on 2026-08-09:
+      # https://github.com/actions/upload-artifact/releases/tag/v7.0.1
+      - name: Upload database release evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: supabase-release-contracts-${{ github.run_id }}
+          path: artifacts/supabase
+          if-no-files-found: error
+          retention-days: 14
+
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      # actions/checkout v4.4.0, verified from the official tag on 2026-08-09:
+      # https://github.com/actions/checkout/releases/tag/v4.4.0
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Require the combined public source candidate
+        shell: bash
+        run: |
+          if [[ ! -f package.json || ! -f package-lock.json || ! -f PUBLIC_SNAPSHOT_MANIFEST.sha256 ]]; then
+            echo "::error::The combined public candidate and snapshot manifest are required."
+            exit 1
+          fi
+      # actions/setup-node v4.4.0, verified from the official tag on 2026-08-09:
+      # https://github.com/actions/setup-node/releases/tag/v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: "22.13.1"
+          cache: npm
+      - name: Validate public packaging and snapshot manifest
+        run: bash scripts/validate-public-packaging.sh
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Check public documentation
+        run: npm run docs:public-check
+      - name: Test safe bootstrap helpers
+        run: npm run test:bootstrap
+      - name: Test reusable branding boundary
+        run: npm run test:branding
+      - name: Test client configuration
+        run: npm run test:client-config
+      - name: Test secret scanner
+        run: npm run test:secret-scan
+      - name: Scan source for secrets
+        run: npm run secret-scan
+      - name: Test AI contracts
+        run: npm run test:ai-contracts
+      - name: Test FFmpeg resolution and standalone packaging
+        run: npm run test:ffmpeg
+      - name: Test public quality contract
+        run: npm run test:public-quality
+      - name: Test dashboard navigation
+        run: npm run test:dashboard-navigation
+      - name: Test release-critical application contracts
+        run: npm run test:release-contracts
+      - name: Audit production dependencies
+        run: npm audit --omit=dev
+      - name: Type-check strict TypeScript
+        run: npm run typecheck
+      - name: Lint
+        run: npm run lint
+      - name: Build
+        run: npm run build
+      - name: Validate the hardened Compose model
+        run: docker compose --env-file .env.example config --quiet
+      - name: Build the application container with synthetic public configuration
+        run: |
+          mkdir -p artifacts/container
+          docker build \
+            --build-arg NEXT_PUBLIC_SITE_URL=http://localhost:3000 \
+            --build-arg NEXT_PUBLIC_SUPABASE_URL=https://public-build.supabase.invalid \
+            --build-arg NEXT_PUBLIC_SUPABASE_ANON_KEY=synthetic-public-anon-key \
+            --tag isystem-os:ci .
+      - name: Run the image read-only and wait for its health check
+        run: bash scripts/verify-public-container.sh isystem-os:ci artifacts/container
+      # aquasecurity/trivy-action v0.36.0 commit, verified in the official repository on 2026-08-09:
+      # https://github.com/aquasecurity/trivy-action/commit/ed142fd0673e97e23eac54620cfb913e5ce36c25
+      - name: Scan the final runtime image for high-severity vulnerabilities
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25
+        with:
+          image-ref: isystem-os:ci
+          version: v0.70.0
+          scanners: vuln
+          format: json
+          output: artifacts/container/trivy.json
+          exit-code: "1"
+          ignore-unfixed: false
+          severity: HIGH,CRITICAL
+      - name: Scan generated build output
+        shell: bash
+        run: |
+          if [[ ! -d .next ]]; then
+            echo "::error::The production build did not create .next output."
+            exit 1
+          fi
+          mkdir -p "$RUNNER_TEMP/public-build-scan-bin"
+          bash scripts/install-secret-scanners.sh "$RUNNER_TEMP/public-build-scan-bin"
+          export PATH="$RUNNER_TEMP/public-build-scan-bin:$PATH"
+          bash scripts/scan-generated-output.sh .next
+          npm run secret-scan
+      # actions/upload-artifact v7.0.1, verified from the official tag on 2026-08-09:
+      # https://github.com/actions/upload-artifact/releases/tag/v7.0.1
+      - name: Upload container verification evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: container-release-evidence-${{ github.run_id }}
+          path: artifacts/container
+          if-no-files-found: warn
+          retention-days: 14
+
+# Browser E2E and accessibility suites remain manual until their public fixtures
+# are stable. Their status and the required manual release evidence are recorded
+# in docs/public-release-checklist.md.

@@ -1,0 +1,13 @@
+{
+  "framework": "nextjs",
+  "crons": [
+    {
+      "path": "/api/market-monitor/run",
+      "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/newsletter/dispatch",
+      "schedule": "0 7 * * *"
+    }
+  ]
+}

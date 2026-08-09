@@ -1,0 +1,68 @@
+name: Bug report
+description: Report a reproducible defect in the public repository
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Remove secrets and personal data. Report security issues through a private Security Advisory, not this form.
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Preflight
+      options:
+        - label: I searched existing issues and discussions.
+          required: true
+        - label: This report contains no secrets, customer data, or private infrastructure details.
+          required: true
+        - label: This is not a security vulnerability.
+          required: true
+  - type: input
+    id: version
+    attributes:
+      label: Public version or commit
+      placeholder: v0.x.y or full commit SHA
+    validations:
+      required: true
+  - type: dropdown
+    id: deployment
+    attributes:
+      label: Deployment model
+      options:
+        - Local development
+        - Self-hosted app with managed Supabase
+        - Fully self-hosted stack (experimental)
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: State expected and actual behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Use synthetic data and exact steps.
+      placeholder: |
+        1. Start from...
+        2. Configure...
+        3. Observe...
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Node/npm versions, browser, and relevant provider mode. Redact identifiers.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized logs or screenshots
+      description: Optional. Remove tokens, cookies, personal data, URLs, and account identifiers.
