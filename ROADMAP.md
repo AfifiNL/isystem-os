@@ -4,7 +4,7 @@ This roadmap communicates direction, not a promise of dates or delivery. Items m
 
 ## Now: trustworthy public beta maintenance
 
-- Keep the v0.1.0 source snapshot reproducible and its release evidence current.
+- Keep the published v0.1.1 source snapshot reproducible and its release evidence current.
 - Turn candidate product areas into Verified beta journeys one at a time, starting with the website-to-enquiry path.
 - Rehearse backup restore, provider failure, and operator rollback against synthetic environments for every deployment profile.
 - Keep dependency, secret, license, asset, and runtime-image scans green.
