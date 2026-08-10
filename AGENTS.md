@@ -44,7 +44,7 @@ npm run snapshot:verify   # Verify the exported SHA-256 source manifest
 npm run imports:verify    # Verify relative dependency closure for exported scripts
 ```
 
-The combined public candidate must also expose `test:client-config`, `test:ai-contracts`, `test:public-quality`, `test:dashboard-navigation`, and `test:release-contracts`. `npm run verify` coordinates the documented npm checks. The database release workflow separately replays migrations, runs pgTAP, and exercises booking-capacity concurrency against the disposable local Supabase project. There is no generic `npm test` command.
+The combined public release artifact must also expose `test:client-config`, `test:ai-contracts`, `test:public-quality`, `test:dashboard-navigation`, and `test:release-contracts`. `npm run verify` coordinates the documented npm checks. The database release workflow separately replays migrations, runs pgTAP, and exercises booking-capacity concurrency against the disposable local Supabase project. There is no generic `npm test` command.
 
 ## Public architecture
 
