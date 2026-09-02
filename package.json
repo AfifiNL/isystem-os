@@ -87,7 +87,7 @@
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.97.0",
     "@tailwindcss/typography": "^0.5.19",
-    "@tiptap/core": "^3.20.0",
+    "@tiptap/core": "^3.31.0",
     "@tiptap/extension-blockquote": "^3.20.0",
     "@tiptap/extension-bold": "^3.20.0",
     "@tiptap/extension-code": "^3.20.0",
