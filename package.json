@@ -76,10 +76,10 @@
     "test:release-contracts": "node --import tsx --test src/features/contact/public-submission.test.ts \"src/app/media/public/[...path]/cache-policy.test.ts\" src/features/seo/lib/google-search-console/sync-outcome.test.ts src/features/booking/lib/booking-email-delivery-outcome.test.ts && npm run test:booking-management && npm run test:outreach"
   },
   "dependencies": {
-    "@ai-sdk/google": "^3.0.30",
-    "@ai-sdk/google-vertex": "^4.0.140",
-    "@ai-sdk/openai": "^3.0.30",
-    "@ai-sdk/react": "^3.0.99",
+    "@ai-sdk/google": "^3.0.121",
+    "@ai-sdk/google-vertex": "^4.0.197",
+    "@ai-sdk/openai": "^3.0.109",
+    "@ai-sdk/react": "^3.0.280",
     "@gsap/react": "^2.1.2",
     "@puckeditor/core": "^0.22.2",
     "@react-three/drei": "^10.7.7",
@@ -116,7 +116,7 @@
     "@tiptap/starter-kit": "^3.20.0",
     "@types/marked": "^5.0.2",
     "@types/turndown": "^5.0.6",
-    "ai": "^6.0.97",
+    "ai": "^6.0.277",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
