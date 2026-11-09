@@ -2,6 +2,16 @@
 
 This checklist is mandatory for the first public source release and should be repeated for later releases in proportion to change risk.
 
+## v0.1.2 evidence record
+
+The published v0.1.2 artifact is the immutable tag `v0.1.2` at commit `477db7f2a8ca87817e2362f229a611d71012c161`. The protected [tagged-commit Public CI run 42668737489](https://github.com/AfifiNL/isystem-os/actions/runs/42668737489) and [tagged-commit Security run 42668737540](https://github.com/AfifiNL/isystem-os/actions/runs/42668737540) cover the exported source manifest, relative-import closure, documentation, bootstrap/configuration contracts, strict typecheck, lint, build, migration replay, every exported pgTAP suite, booking-capacity concurrency, source secret scans, dependency audit, container health, and runtime image checks.
+
+A fresh GitHub clone of the tag completes `./setup.sh`, creates a mode-600 `.env.local`, passes `npm run snapshot:verify`, and reports no findings from `npm audit --omit=dev`. No database migration changed since v0.1.1.
+
+The open Dependabot and secret-scanning alert counts were zero when the tag was created. The maintainer dismissed the last two Dependabot alerts as tolerable risk, with the reason recorded on each: #100 (deepmerge, which has no patched release) and #101 (minimatch, whose fix needs an upgrade that typescript-eslint and ts-morph do not support yet). Both are reached only through development tooling and neither ships in the application or its container image.
+
+The publisher-owned release gates below are complete for v0.1.2.
+
 ## v0.1.1 evidence record
 
 The published v0.1.1 artifact is the immutable tag `v0.1.1` at commit `fba89ccc1e663a6c3eac0a1efe431db5de175b4f`. The protected [tagged-commit Public CI run 31310665815](https://github.com/AfifiNL/isystem-os/actions/runs/31310665815) and [tagged-commit Security run 31310665817](https://github.com/AfifiNL/isystem-os/actions/runs/31310665817) cover the exported source manifest, relative-import closure, documentation, bootstrap/configuration contracts, strict typecheck, lint, build, migration replay, every exported pgTAP suite, booking-capacity concurrency, source secret scans, dependency audit, container health, and runtime image checks.
@@ -23,7 +33,7 @@ The publisher-owned release gates below are complete for v0.1.1. Deployment-spec
 - [x] Review fonts, icons, images, templates, generated media, and copied snippets.
 - [x] Reconcile every shipped non-package asset with [asset provenance](asset-provenance.md).
 - [x] Preserve `NOTICE` and keep trademarked identity separate from the code license.
-- [x] Resolve publisher-owned licensing and ownership questions for the v0.1.1 export; jurisdiction-specific legal review remains deployment-specific.
+- [x] Resolve publisher-owned licensing and ownership questions for the v0.1.2 export; jurisdiction-specific legal review remains deployment-specific.
 
 Publisher sign-off: original project files are Apache-2.0 licensed. Dependencies and assets are separately attributed in `NOTICE`, `THIRD_PARTY_NOTICES.md`, `docs/third-party-inventory.json`, `docs/asset-provenance.md`, and `TRADEMARKS.md`.
 
@@ -58,7 +68,7 @@ Publisher sign-off: original project files are Apache-2.0 licensed. Dependencies
 - [x] README does not claim a demo, one-command deployment, container image, test suite, or integration that was not exercised.
 - [x] Known limitations and breaking-change risk are prominent.
 - [x] Documentation links and commands work.
-- [x] Release notes identify the exact immutable v0.1.1 tag commit and migration compatibility.
+- [x] Release notes identify the exact immutable v0.1.2 tag commit and migration compatibility.
 - [x] The digest-pinned Docker image builds with synthetic configuration, runs non-root/read-only with dropped capabilities, passes its health check, and has no Trivy high/critical finding with an upstream fix. The complete `trivy-full.json` report is retained; any unfixed high/critical findings require explicit security review before release.
 - [x] The container exposes at least 1 GiB of bounded `/tmp` scratch space and its in-container FFmpeg/FFprobe media smoke passes.
 
@@ -75,7 +85,7 @@ The following checks depend on the target deployment and must be completed by it
 
 All GitHub Actions are pinned to immutable commits. Gitleaks and TruffleHog CI downloads are pinned by version and official archive SHA-256; Trivy and Supabase CLI versions are explicit. The pins were resolved from official repositories and registries on 2026-08-09; future upgrades must repeat that verification and update adjacent evidence comments.
 
-Generate a deterministic dependency license inventory after `npm ci` with `npm run license:inventory`. Review that artifact alongside fonts, icons, media, templates, copied code, and upstream notice requirements. The published v0.1.1 release has verified notices in `THIRD_PARTY_NOTICES.md`; future changes must keep that inventory synchronized and must not reintroduce the release-blocker marker.
+Generate a deterministic dependency license inventory after `npm ci` with `npm run license:inventory`. Review that artifact alongside fonts, icons, media, templates, copied code, and upstream notice requirements. The published v0.1.2 release has verified notices in `THIRD_PARTY_NOTICES.md`; future changes must keep that inventory synchronized and must not reintroduce the release-blocker marker.
 
 The local gate coordinates checks but does not replace human review:
 
