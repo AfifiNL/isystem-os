@@ -1,6 +1,6 @@
 # iSystem OS
 
-**Status:** Published public beta v0.1.1 | **Expected port:** 3000 | **Expected stack:** Next.js, TypeScript, React, Supabase
+**Status:** Published public beta v0.1.2 | **Expected port:** 3000 | **Expected stack:** Next.js, TypeScript, React, Supabase
 
 ## What
 

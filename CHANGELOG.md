@@ -13,6 +13,18 @@ All notable public changes will be documented here. The format follows Keep a Ch
 ### Security
 
 - Added private vulnerability-reporting guidance and a public-release secret/identity review gate.
+
+### Known limitations
+
+- Product capabilities remain beta and are tracked in [the feature maturity matrix](docs/features-and-maturity.md).
+- Browser E2E/accessibility, backup restore, and provider-specific journeys remain operator release steps rather than a universal hosted-service guarantee.
+
+## [0.1.2] - 2026-11-09
+
+Security release. It ships the dependency update merged in [#46](https://github.com/AfifiNL/isystem-os/pull/46); no change to application behaviour is intended.
+
+### Security
+
 - Dependency security update: `npm audit --omit=dev` reports zero findings again (it reported 23, two of them critical, against the v0.1.1 lockfile in November 2026).
   - Next.js and `eslint-config-next` 15.5.21 → 15.5.29, for the Image Optimization remote-code-execution advisories (GHSA-2464-fhr4-w9xw, GHSA-2xp9-vwfh-vxw4), the SSG/ISR cache-poisoning advisories and the Server Actions denial-of-service advisory.
   - DOMPurify override 3.4.13 → 3.4.17 (GHSA-cg2g-xh64-v4q7, GHSA-mrv2-3pqr-j5jr).
@@ -23,10 +35,9 @@ All notable public changes will be documented here. The format follows Keep a Ch
   - `@opentelemetry/api` stays at 1.9.0 through an override. The AI SDK update would otherwise resolve 1.10.0, whose CommonJS build gives a propagator helper a generated name ending in `re_` plus more than 20 letters; the generated-output secret scan's API-key pattern flags that name in the middleware source map.
   - `docs/third-party-inventory.json` regenerated: one package added (Apache-2.0), 26 removed, no license changes.
 
-### Known limitations
+### Upgrade notes
 
-- Product capabilities remain beta and are tracked in [the feature maturity matrix](docs/features-and-maturity.md).
-- Browser E2E/accessibility, backup restore, and provider-specific journeys remain operator release steps rather than a universal hosted-service guarantee.
+- No database migrations changed since v0.1.1, so an existing v0.1.1 database needs no migration. Run `npm ci` after pulling to install the new lockfile.
 
 ## [0.1.1] - 2026-08-09
 
@@ -45,5 +56,6 @@ All notable public changes will be documented here. The format follows Keep a Ch
 - Initial public beta tag; see the immutable `v0.1.0` release for its exact source snapshot.
 
 [Unreleased]: https://github.com/AfifiNL/isystem-os/commits/main
+[0.1.2]: https://github.com/AfifiNL/isystem-os/releases/tag/v0.1.2
 [0.1.1]: https://github.com/AfifiNL/isystem-os/releases/tag/v0.1.1
 [0.1.0]: https://github.com/AfifiNL/isystem-os/releases/tag/v0.1.0
