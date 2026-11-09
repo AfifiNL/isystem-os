@@ -13,6 +13,15 @@ All notable public changes will be documented here. The format follows Keep a Ch
 ### Security
 
 - Added private vulnerability-reporting guidance and a public-release secret/identity review gate.
+- Dependency security update: `npm audit --omit=dev` reports zero findings again (it reported 23, two of them critical, against the v0.1.1 lockfile in November 2026).
+  - Next.js and `eslint-config-next` 15.5.21 → 15.5.29, for the Image Optimization remote-code-execution advisories (GHSA-2464-fhr4-w9xw, GHSA-2xp9-vwfh-vxw4), the SSG/ISR cache-poisoning advisories and the Server Actions denial-of-service advisory.
+  - DOMPurify override 3.4.13 → 3.4.17 (GHSA-cg2g-xh64-v4q7, GHSA-mrv2-3pqr-j5jr).
+  - Tiptap 3.20.0 → 3.33.0 for every `@tiptap/*` package, with prosemirror-view 1.42.9; happy-dom 21.0.4 through an override, because `@puckeditor/core` 0.22 still declares happy-dom ^20.
+  - Zod 4.6.7, sharp 0.35.5, and the AI SDK raised to the first releases on `@ai-sdk/provider-utils` 4.0.33 (`ai` 6.0.214, `@ai-sdk/google` 3.0.86, `@ai-sdk/google-vertex` 4.0.152, `@ai-sdk/openai` 3.0.77, `@ai-sdk/react` 3.0.216).
+  - New scoped overrides: fflate 0.8.3 for three-stdlib, postcss-selector-parser 6.1.6 for `@tailwindcss/typography`, and KaTeX 0.18.11 for Mermaid (KaTeX 0.17 and 0.18 change only an internal API and internal CSS class names; Mermaid calls `render` and `renderToString`).
+  - Development tooling: the brace-expansion pins move to fixed releases (1.1.21, 2.1.7, 5.0.12), `@hono/node-server` 2.0.11 → 2.1.6 for the MCP SDK, and in-range updates for undici, fast-uri, hono, proxy-addr, ip-address, js-yaml, systeminformation, `@humanfs/node`, `@modelcontextprotocol/sdk`, body-parser and qs. Eleven development-only findings remain in the shadcn CLI and the typescript-eslint minimatch chain; both need major upgrades and neither ships in the application or its container image.
+  - `@opentelemetry/api` stays at 1.9.0 through an override. The AI SDK update would otherwise resolve 1.10.0, whose CommonJS build gives a propagator helper a generated name ending in `re_` plus more than 20 letters; the generated-output secret scan's API-key pattern flags that name in the middleware source map.
+  - `docs/third-party-inventory.json` regenerated: one package added (Apache-2.0), 26 removed, no license changes.
 
 ### Known limitations
 
