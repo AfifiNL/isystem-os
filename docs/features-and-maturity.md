@@ -17,9 +17,9 @@ The source, bootstrap, migration, security, and container contracts are verified
 |---|---|
 | Fresh public source bootstrap | `./setup.sh` from a clean GitHub clone installs the lockfile, validates `isystem.config.ts`, creates a mode-600 `.env.local`, and leaves provider/database setup explicit. |
 | Configuration and safety contracts | `npm run test:bootstrap`, `npm run test:client-config`, `npm run test:branding`, and `npm run docs:public-check` pass on the release commit. |
-| Application build and runtime packaging | Tagged-commit Public CI [run 31310665815](https://github.com/AfifiNL/isystem-os/actions/runs/31310665815) for `v0.1.1` at `fba89ccc1e663a6c3eac0a1efe431db5de175b4f` passes typecheck, lint, build, standalone preparation, Compose validation, read-only health smoke, and the runtime image gate. |
+| Application build and runtime packaging | Tagged-commit Public CI [run 42668737489](https://github.com/AfifiNL/isystem-os/actions/runs/42668737489) for `v0.1.2` at `477db7f2a8ca87817e2362f229a611d71012c161` passes typecheck, lint, build, standalone preparation, Compose validation, read-only health smoke, and the runtime image gate. |
 | Database replay and tenant contracts | The same tagged-commit CI run replays every migration from zero, runs all exported pgTAP suites, and runs the two-session booking-capacity probe. |
-| Dependency and source security | Tagged-commit Public CI [Security run 31310665817](https://github.com/AfifiNL/isystem-os/actions/runs/31310665817) for `v0.1.1` passes the packaging validator, Gitleaks, TruffleHog, source secret scan, and production dependency audit. |
+| Dependency and source security | Tagged-commit Public CI [Security run 42668737540](https://github.com/AfifiNL/isystem-os/actions/runs/42668737540) for `v0.1.2` passes the packaging validator, Gitleaks, TruffleHog, source secret scan, and production dependency audit. |
 
 These foundations make the repository usable for evaluation, development, and a controlled beta deployment. They do not replace an operator's review of identity, authorization, backups, providers, legal obligations, or production data handling.
 
